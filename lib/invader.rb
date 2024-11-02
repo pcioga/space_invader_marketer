@@ -2,7 +2,7 @@
 
 # Handles Invader patterns and findings logic
 class Invader
-  attr_reader :signature
+  attr_reader :signature, :pattern, :width, :height
 
   KNOWN_INVADERS = {
     invader1: <<~PATTERN,
@@ -30,5 +30,7 @@ class Invader
   def initialize(invader)
     @pattern = KNOWN_INVADERS[invader.to_sym]
     @signature = @pattern.split("\n").first
+    @width = @signature.length
+    @height = @pattern.lines.count
   end
 end
