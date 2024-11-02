@@ -3,9 +3,21 @@
 
 require 'optparse'
 require_relative '../lib/radar'
+require_relative '../lib/invader'
+
+def input_radar_file
+  "radar.txt"
+end
+
+def input_invader_type
+  "all"
+end
 
 begin
-  scanner = Radar.new.scan
+  puts "\n##Space Invaders##"
+  file = input_radar_file
+  invader_type = input_invader_type
+  Radar.new(file, invader_type).scan
 rescue => e
   puts "Error: #{e.message}"
   exit 1

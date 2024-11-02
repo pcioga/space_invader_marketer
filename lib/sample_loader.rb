@@ -2,10 +2,10 @@
 
 # Loads samples from .txt files
 class SampleLoader
-  FILE_PATH = './samples/radar.txt'
+  FILE_PATH = './samples/'
 
-  def self.load_sample
-    File.read(FILE_PATH).split("\n")
+  def self.load_sample(file)
+    File.read(FILE_PATH + file).split("\n")
   rescue Errno::ENOENT
     raise "Error: File '#{@file_path}' not found"
   rescue SystemCallError => e

@@ -3,34 +3,38 @@
 # Handles Invader patterns and findings logic
 class Invader
   attr_reader :signature, :pattern, :width, :height
-
-  KNOWN_INVADERS = {
-    invader1: <<~PATTERN,
-      --o-----o--
-      ---o---o---
-      --ooooooo--
-      -oo-ooo-oo-
-      ooooooooooo
-      o-ooooooo-o
-      o-o-----o-o
-      ---oo-oo---
-    PATTERN
-    invader2: <<~PATTERN
-      ---oo---
-      --oooo--
-      -oooooo-
-      oo-oo-oo
-      oooooooo
-      --o--o--
-      -o-oo-o-
-      o-o--o-o
-    PATTERN
-  }.freeze
+  attr_accessor :false_positives, :confirmed, :false_locations, :confirmed_locations
 
   def initialize(invader)
-    @pattern = KNOWN_INVADERS[invader.to_sym]
+    @type = invader
+    process_pattern
+    init_stats
+  end
+
+  def findings
+    {
+      @type.to_sym => {
+        confirmed: @confirmed,
+        confirmed_locations: @confirmed_locations,
+        false_positives: @false_positives,
+        false_locations: @false_locations
+      }
+    }
+  end
+
+  private
+
+  def process_pattern
+    @pattern = InvaderLoader::KNOWN_INVADERS[@type.to_sym]
     @signature = @pattern.split("\n").first
     @width = @signature.length
     @height = @pattern.lines.count
+  end
+
+  def init_stats
+    @false_positives = 0
+    @confirmed = 0
+    @false_locations = []
+    @confirmed_locations = []
   end
 end
