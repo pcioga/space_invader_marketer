@@ -3,20 +3,24 @@
 
 require 'optparse'
 require_relative '../lib/radar'
-require_relative '../lib/invader'
+require_relative '../lib/printer'
 
 def input_radar_file
-  "radar.txt"
+  puts "\nPlease enter the radar filename (e.g., radar.txt):"
+  gets.chomp.strip
 end
 
 def input_invader_type
-  "all"
+  Printer.display_invaders
+  puts "\nPlease enter an invader type (e.g., invader1) or enter 'all':"
+  gets.chomp.strip
 end
 
 begin
   puts "\n##Space Invaders##"
   file = input_radar_file
   invader_type = input_invader_type
+
   Radar.new(file, invader_type).scan
 rescue => e
   puts "Error: #{e.message}"

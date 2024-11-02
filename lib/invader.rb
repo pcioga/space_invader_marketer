@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Handles Invader patterns and findings logic
+# Handles Invader findings and pattern logic
 class Invader
-  attr_reader :signature, :pattern, :width, :height
+  attr_reader :signature, :pattern, :width, :height, :type
   attr_accessor :false_positives, :confirmed, :false_locations, :confirmed_locations
 
   def initialize(invader)
@@ -20,6 +20,16 @@ class Invader
         false_locations: @false_locations
       }
     }
+  end
+
+  def update_findings(confirmed, row, column)
+    if confirmed
+      self.confirmed += 1
+      confirmed_locations << [row, column]
+    else
+      self.false_positives += 1
+      false_locations << [row, column]
+    end
   end
 
   private
