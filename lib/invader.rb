@@ -2,6 +2,8 @@
 
 # Handles Invader patterns and findings logic
 class Invader
+  attr_reader :signature
+
   KNOWN_INVADERS = {
     invader1: <<~PATTERN,
       --o-----o--
@@ -24,10 +26,9 @@ class Invader
       o-o--o-o
     PATTERN
   }.freeze
-  
+
   def initialize(invader)
-    puts invader
-    @invader = invader
-    @first_row = @invader[0]
+    @pattern = KNOWN_INVADERS[invader.to_sym]
+    @signature = @pattern.split("\n").first
   end
 end

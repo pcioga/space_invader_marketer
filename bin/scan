@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'optparse'
 require_relative '../lib/radar'
 
-scanner = Radar.new
-p scanner
+begin
+  scanner = Radar.new.scan
+rescue => e
+  puts "Error: #{e.message}"
+  exit 1
+end
